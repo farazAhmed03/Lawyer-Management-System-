@@ -10,7 +10,4 @@ serviceAccountKey.json
 
 # OS files
 .DS_Store
-Thumbs.db
-
-# Uploads (optional)
-uploads/
+Thumbs.db 
