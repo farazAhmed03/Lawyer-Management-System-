@@ -82,9 +82,9 @@ app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
-  dbConnect(); // Connect to DB
+  await dbConnect();
 });
 
 // Socket Handler
