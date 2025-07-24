@@ -1,4 +1,3 @@
-const admin = require('../Config/Firebase');
 const User = require('../Models/User');
 const OTP = require('../Models/OTP');
 const profileModel = require('../Models/Profile');
@@ -139,51 +138,6 @@ const login = async (req, res, next) => {
     }
 };
 
-//! ==================== GOOGLE LOGIN ====================
-const googleLogin = async (req, res, next) => {
-    try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader?.startsWith('Bearer '))
-            return sendResponse(res, 401, false, 'Missing or invalid token');
-
-        const idToken = authHeader.split(' ')[1];
-        const decoded = await admin.auth().verifyIdToken(idToken);
-        const { uid, name, email, picture } = decoded;
-
-        let user = await User.findOne({ email });
-
-        if (!user) {
-            const profile = await profileModel.create({});
-            user = await User.create({
-                username: name,
-                email,
-                password: uid,
-                role: 'client',
-                profile: profile._id,
-                image: picture || `https://api.dicebear.com/5.x/initials/svg?seed=${name}`,
-                isVerified: true,
-            });
-        }
-
-        const token = generateToken({ userId: user._id, role: user.role });
-
-        const cookieOptions = {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-            expires: new Date(Date.now() + 3600000),
-        };
-
-        user = user.toObject();
-        delete user.password;
-        user.token = token;
-
-        res.cookie('token', token, cookieOptions);
-        return sendResponse(res, 200, true, 'Login successful', user);
-    } catch (error) {
-        next(error);
-    }
-};
 
 //! ==================== LOGOUT ====================
 const logout = async (req, res, next) => {
@@ -283,7 +237,6 @@ module.exports = {
     verifyOTP,
     register,
     login,
-    googleLogin,
     logout,
     resetPasswordToken,
     resetPassword,
