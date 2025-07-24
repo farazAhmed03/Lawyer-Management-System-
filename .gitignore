@@ -1,0 +1,16 @@
+# Node dependencies
+node_modules/
+
+# Environment files
+.env
+serviceAccountKey.json
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Uploads (optional)
+uploads/
