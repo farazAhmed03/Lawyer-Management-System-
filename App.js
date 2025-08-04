@@ -32,7 +32,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server, {
   cors: {
-    origin: ["http://localhost:3001", "http://127.0.0.1:5500", "http://localhost:5500", "https://faithful-motivation-production.up.railway.app/"],
+    origin: ["http://localhost:3000", "http://127.0.0.1:5500", "http://localhost:5500", "https://faithful-motivation-production.up.railway.app/"],
     credentials: true
   }
 });
@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: ["http://localhost:3001", "http://127.0.0.1:5500", "http://localhost:5500", "https://faithful-motivation-production.up.railway.app/"],
+  origin: ["http://localhost:3000", "http://127.0.0.1:5500", "http://localhost:5500", "https://faithful-motivation-production.up.railway.app/"],
   credentials: true
 }));
 app.use(helmet());
