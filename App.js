@@ -34,7 +34,8 @@ const server = http.createServer(app);
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
-  "https://lawyer-management-system-frontend.vercel.app"
+  "https://lawyer-management-system-frontend.vercel.app",
+  "https://lawyer-management-system-frontend-ohl3c6hd7.vercel.app"
 ];
 
 app.use(cors({
