@@ -12,12 +12,11 @@ const fileUpload = require('express-fileupload');
 // Load environment variables
 dotenv.config();
 
-// Custom Imports
-// const dbConnect = require('./Config/database');
+// Custom imports
 const dbConnect = require('./Config/database');
 const socketHandler = require('./Sockets/SocketHandler');
 
-// Routes and Middleware
+// Route imports
 const errorHandler = require('./Middleware/errorHandler');
 const authRoutes = require('./Routers/AuthRoutes');
 const appointmentRoutes = require('./Routers/AppointmentRoute');
@@ -26,44 +25,31 @@ const chatRoutes = require('./Routers/ChatRoute');
 const ratingAndReviewRoutes = require('./Routers/RatingAndReviewRoute');
 const userRoutes = require('./Routers/AllUsersRoutes');
 const stateRoutes = require('./Routers/StateRoute');
-const { generalLimiter } = require('./Utils/RateLimit');
 
-// Initialize express app
+// Initialize express and server
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server, {
-  cors: {
-    origin: [
-    "http://localhost:3000", 
-    "https://lawyer-management-system-frontend.vercel.app"
-  ],
-    credentials: true
-  }
-});
 
+// ==== CORS Configuration ====
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://lawyer-management-system-frontend.vercel.app"
+];
 
-// Attach io instance to req
-app.set('io', io);
-app.use((req, res, next) => {
-  req.io = io;
-  next();
-});
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
-// Middleware
+// ==== Middleware ====
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-  origin: [
-    "http://localhost:3000", 
-    "https://lawyer-management-system-frontend.vercel.app"
-  ],
-  credentials: true
-}))
 app.use(helmet());
 app.use(morgan('dev'));
-// app.use(generalLimiter);
+app.use(fileUpload());
 
-// Serve static files
+// ==== Serve Static Files ====
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   setHeaders: (res) => {
     res.set('Access-Control-Allow-Origin', '*');
@@ -71,7 +57,22 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   }
 }));
 
-// API Routes
+// ==== Initialize Socket.io ====
+const io = socketIO(server, {
+  cors: {
+    origin: allowedOrigins,
+    credentials: true
+  }
+});
+
+// Attach io to app and req
+app.set('io', io);
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
+
+// ==== API Routes ====
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/appointment', appointmentRoutes);
 app.use('/api/v1/case', caseRoutes);
@@ -80,25 +81,18 @@ app.use('/api/v1/rating-and-review', ratingAndReviewRoutes);
 app.use('/api/v1/stats', stateRoutes);
 app.use('/api/v1/users', userRoutes);
 
-// Default Route
+// ==== Default Route ====
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Lawyer Management Backend is Live');
 });
 
-// Error Handler
+// ==== Error Handler ====
 app.use(errorHandler);
 
-// Start server
+// ==== Start Server ====
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, async () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  
-});
-
-// Socket Handler
-socketHandler(io);
-
-// Optional: Log each socket connection
-io.on('connection', (socket) => {
-  console.log(' User connected:', socket.id);
+  dbConnect(); 
+  socketHandler(io); 
 });
