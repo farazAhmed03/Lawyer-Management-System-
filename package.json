@@ -9,6 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "-": "^0.0.1",
+    "@sentry/node": "^9.44.0",
+>>>>>>> ef75c9e6d03ac55bd0f8382ab84e556b8d89633e
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "cloudinary": "^1.41.3",
@@ -16,24 +21,47 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+<<<<<<< HEAD
+=======
+    "date-fns": "^4.1.0",
+>>>>>>> ef75c9e6d03ac55bd0f8382ab84e556b8d89633e
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "express-fileupload": "^1.5.2",
     "express-rate-limit": "^7.5.1",
+<<<<<<< HEAD
+=======
+    "firebase-admin": "^13.4.0",
+    "g": "^2.0.1",
+>>>>>>> ef75c9e6d03ac55bd0f8382ab84e556b8d89633e
     "helmet": "^8.1.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.0",
+<<<<<<< HEAD
     "morgan": "^1.10.1",
     "multer": "^1.4.5-lts.1",
     "node-schedule": "^2.1.1",
     "nodemailer": "^7.0.9",
+=======
+    "moongose": "^1.0.0",
+    "morgan": "^1.10.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.10.1",
+>>>>>>> ef75c9e6d03ac55bd0f8382ab84e556b8d89633e
     "nodemon": "^3.1.10",
     "otp-generator": "^4.0.1",
     "password-validator": "^5.3.0",
     "path": "^0.12.7",
     "sanitize-html": "^2.17.0",
     "socket.io": "^4.8.1",
+<<<<<<< HEAD
+=======
+    "stripe": "^17.7.0",
+    "uuidv4": "^6.2.13",
+>>>>>>> ef75c9e6d03ac55bd0f8382ab84e556b8d89633e
     "validator": "^13.15.15"
   },
   "description": "��#\u0000 \u0000L\u0000e\u0000g\u0000a\u0000l\u0000S\u0000p\u0000h\u0000e\u0000r\u0000e\u0000-\u0000L\u0000M\u0000S\u0000\r\u0000 \u0000# LegalSphere #\u0000 \u0000L\u0000a\u0000w\u0000y\u0000e\u0000r\u0000-\u0000M\u0000a\u0000n\u0000a\u0000g\u0000e\u0000m\u0000e\u0000n\u0000t\u0000-\u0000S\u0000y\u0000s\u0000t\u0000e\u0000m\u0000-\u0000\r\u0000 \u0000"
